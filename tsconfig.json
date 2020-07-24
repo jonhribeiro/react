@@ -17,10 +17,11 @@
         "allowSyntheticDefaultImports": true,
         "strict": true,
         "forceConsistentCasingInFileNames": true,
+        "isolatedModules": true,
         "resolveJsonModule": true,
         "noEmit": true
     },
     "include": [
         "src"
-    ]
+    ],
 }
