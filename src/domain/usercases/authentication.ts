@@ -1,8 +1,8 @@
 import { AccountModel } from '../models/acount-model'
 
-type AuthenticationParams = {
+export type AuthenticationParams = {
   email: string
-  passqord: string
+  password: string
 }
 
 export interface Authentication {
