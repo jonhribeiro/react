@@ -10,10 +10,10 @@ const makeSut = (): AxiosHttpClient => {
 }
 
 describe('AxiosHttpClient', () => {
-    test('deve chamar axios com o URL correto', async () => {
+    test('deve chamar axios com o URL correto com verbo correto', async () => {
         const url = faker.internet.url()
         const sut = makeSut()
         await sut.post({ url })
-        expect(mockedAxios).toHaveBeenCalledWith(url)
+        expect(mockedAxios.post).toHaveBeenCalledWith(url)
     }) 
 })
