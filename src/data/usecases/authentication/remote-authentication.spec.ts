@@ -4,6 +4,7 @@ import { mockAuthentication } from "@/domain/test/mock-authentication"
 import faker from 'faker'
 import { IncalidCredentialsError } from "@/domain/errors/invalid-credentials-error"
 import { HttpStatusCode } from "@/data/protocols/http/http-response"
+import { UnexpectedError } from "@/domain/errors/unexpected-error"
 
 type SutTypes = {
   sut: RemoteAuthentication
@@ -34,12 +35,39 @@ describe('RemoteAuthentication', () => {
     expect(httpPostClientSpy.body).toEqual(authenticationParams)
   })
 
-  test('deve mostra o ero 401 quando for erraddos os dados de login', async () => {
+  test('deve mostra o erro 401 quando for errados os dados de login', async () => {
     const { sut, httpPostClientSpy } = makeSut()
     httpPostClientSpy.response = {
       statusCode: HttpStatusCode.unathorized
     }
     const promise = sut.auth(mockAuthentication())
     await expect(promise).rejects.toThrow(new IncalidCredentialsError())
+  })
+
+  test('deve mostra o erro inesperado erro 400', async () => {
+    const { sut, httpPostClientSpy } = makeSut()
+    httpPostClientSpy.response = {
+      statusCode: HttpStatusCode.badRequest
+    }
+    const promise = sut.auth(mockAuthentication())
+    await expect(promise).rejects.toThrow(new UnexpectedError())
+  })
+
+  test('deve mostra o erro inesperado erro 500', async () => {
+    const { sut, httpPostClientSpy } = makeSut()
+    httpPostClientSpy.response = {
+      statusCode: HttpStatusCode.serverError
+    }
+    const promise = sut.auth(mockAuthentication())
+    await expect(promise).rejects.toThrow(new UnexpectedError())
+  })
+
+  test('deve mostra o erro inesperado erro 404', async () => {
+    const { sut, httpPostClientSpy } = makeSut()
+    httpPostClientSpy.response = {
+      statusCode: HttpStatusCode.notFound
+    }
+    const promise = sut.auth(mockAuthentication())
+    await expect(promise).rejects.toThrow(new UnexpectedError())
   })
 })
