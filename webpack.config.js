@@ -23,13 +23,13 @@ module.exports = {
             loader: 'ts-loader',
             exclude: /node_modules/
         }, {
-            test: /\.s(css?)$/,
+            test: /\.scss$/,
             use: [{
                 loader: 'style-loader'
             }, {
                 loader: 'css-loader',
                 options: {
-                    module: true
+                    modules: true
                 }
             }, {
                 loader: 'sass-loader'
