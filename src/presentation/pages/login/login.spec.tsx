@@ -1,19 +1,35 @@
 import React from 'react'
-import { render, RenderResult } from '@testing-library/react'
+import { render, RenderResult, fireEvent, cleanup } from '@testing-library/react'
 import Login from './login'
+import { Validation } from '@/presentation/protocols/validation'
 
 type SutTypes = {
     sut: RenderResult
+    validationSpy: ValidationSpy
+}
+
+class ValidationSpy implements Validation {
+    errorMessage: string
+    input: Record<string, unknown>
+
+    validate (input: Record<string, unknown>): string {
+        this.input = input
+        return this.errorMessage
+    }
 }
 
 const makeSut = (): SutTypes => {
-    const sut = render(<Login />)
+    const validationSpy = new ValidationSpy()
+    const sut = render(<Login validation={validationSpy} />)
     return {
-        sut
+        sut,
+        validationSpy
     }
 }
 
 describe('login componente', () => {
+    afterEach(cleanup)
+
     test('devemos não renderiza gerando erro no início e com o button desabilitado', () => {
         const { sut } = makeSut()
         const errorWrap = sut.getByTestId('error-wrap')
@@ -26,5 +42,14 @@ describe('login componente', () => {
         const passwordStatus = sut.getByTestId('password-status')
         expect(passwordStatus.title).toBe('Campo obrigatório')
         expect(passwordStatus.textContent).toBe('🔴')
+    })
+
+    test('deve chamar a validação com o valor correto', () => {
+        const { sut, validationSpy } = makeSut()
+        const emailInput = sut.getByTestId('email')
+        fireEvent.input(emailInput, { target: { value: 'any_email' } })
+        expect(validationSpy.input).toEqual({
+            email: 'any_email'
+        })
     })
 })
