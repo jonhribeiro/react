@@ -1,5 +1,6 @@
 import React from 'react'
 import faker from 'faker'
+import 'jest-localstorage-mock'
 import { render, RenderResult, fireEvent, cleanup, waitFor } from '@testing-library/react'
 import Login from './login'
 import { ValidationStub, AuthenticationSpy } from '@/presentation/test/'
@@ -51,6 +52,10 @@ const sumulateStatusForField = (sut: RenderResult, fieldName: string, validation
 
 describe('login componente', () => {
     afterEach(cleanup)
+    
+    beforeEach(() => {
+        localStorage.clear()
+    })
 
     test('devemos não renderiza gerando erro no início e com o button desabilitado', () => {
         const validationError = faker.random.words()
@@ -140,5 +145,12 @@ describe('login componente', () => {
         const mainErro = sut.getByTestId('main-error')
         expect(mainErro.textContent).toBe(error.message)
         expect(errorWrap.childElementCount).toBe(1)
+    })
+
+    test('deve adicionar accessToken ao armazenamento local em caso de sucesso', async () => {
+        const { sut, authenticationSpy } = makeSut()
+        simulateValidsubmit(sut)
+        await waitFor(() => sut.getByTestId('form'))
+        expect(localStorage.setItem).toHaveBeenCalledWith('accessToken', authenticationSpy.account.accessToken)
     })
 })
