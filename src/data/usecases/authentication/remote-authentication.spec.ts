@@ -1,7 +1,7 @@
 import { RemoteAuthentication } from "./remote-authentication"
 import { HttpPostClientSpy } from "@/data/test"
 import { mockAuthentication, mockAcountModel } from "@/domain/test"
-import { IncalidCredentialsError, UnexpectedError } from "@/domain/errors"
+import { InvalidCredentialsError, UnexpectedError } from "@/domain/errors"
 import { HttpStatusCode } from "@/data/protocols/http"
 import { AuthenticationParams } from "@/domain/usercases"
 import { AccountModel } from "@/domain/models"
@@ -42,7 +42,7 @@ describe('RemoteAuthentication', () => {
       statusCode: HttpStatusCode.unathorized
     }
     const promise = sut.auth(mockAuthentication())
-    await expect(promise).rejects.toThrow(new IncalidCredentialsError())
+    await expect(promise).rejects.toThrow(new InvalidCredentialsError())
   })
 
   test('deve mostra o erro inesperado erro 400', async () => {
