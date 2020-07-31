@@ -1,4 +1,6 @@
 import React from 'react'
+import { Router } from 'react-router-dom'
+import { createMemoryHistory } from 'history'
 import faker from 'faker'
 import 'jest-localstorage-mock'
 import { render, RenderResult, fireEvent, cleanup, waitFor } from '@testing-library/react'
@@ -15,12 +17,17 @@ type SutParams = {
     validationError: string
 }
 
+const history = createMemoryHistory()
 
 const makeSut = (params?: SutParams): SutTypes => {
     const validationStub = new ValidationStub()
     const authenticationSpy = new AuthenticationSpy()
     validationStub.errorMessage = params?.validationError
-    const sut = render(<Login validation={validationStub} authentication={authenticationSpy} />)
+    const sut = render(
+        <Router history={history}>
+            <Login validation={validationStub} authentication={authenticationSpy} />
+        </Router>
+    )
     return {
         sut,
         authenticationSpy
@@ -52,7 +59,7 @@ const sumulateStatusForField = (sut: RenderResult, fieldName: string, validation
 
 describe('login componente', () => {
     afterEach(cleanup)
-    
+
     beforeEach(() => {
         localStorage.clear()
     })
@@ -152,5 +159,14 @@ describe('login componente', () => {
         simulateValidsubmit(sut)
         await waitFor(() => sut.getByTestId('form'))
         expect(localStorage.setItem).toHaveBeenCalledWith('accessToken', authenticationSpy.account.accessToken)
+    })
+
+    test('deve ir para a página de inscrição', async () => {
+        const { sut } = makeSut()
+        const register = sut.getByTestId('signup')
+        fireEvent.click(register)
+        expect(history.length).toBe(2)
+        expect(history.location.pathname).toBe('/signup')
+        
     })
 })
