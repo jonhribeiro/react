@@ -120,4 +120,12 @@ describe('login componente', () => {
         simulateValidsubmit(sut)
         expect(authenticationSpy.callsCount).toBe(1)
     })
+
+    test('não deve chamar a autenticação se o formulário for inválido', () => {
+        const validationError = faker.random.words()
+        const { sut, authenticationSpy } = makeSut({validationError})
+        populateEmailField(sut)
+        fireEvent.submit(sut.getByTestId('form'))
+        expect(authenticationSpy.callsCount).toBe(0)
+    })
 })
