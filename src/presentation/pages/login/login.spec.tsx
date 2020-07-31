@@ -60,8 +60,7 @@ describe('login componente', () => {
 
     test('validar o campo password e passar na validacao', () => {
         const { sut, validationStub } = makeSut()
-        const errorMessage = null
-        validationStub.errorMessage = errorMessage
+        validationStub.errorMessage = null
         const passwordInput = sut.getByTestId('password')
         fireEvent.input(passwordInput, { target: { value: faker.internet.password() } })
         const passwordStatus = sut.getByTestId('password-status')
@@ -71,12 +70,22 @@ describe('login componente', () => {
 
     test('validar o campo email e passar na validacao', () => {
         const { sut, validationStub } = makeSut()
-        const errorMessage = null
-        validationStub.errorMessage = errorMessage
+        validationStub.errorMessage = null
         const emailInput = sut.getByTestId('email')
         fireEvent.input(emailInput, { target: { value: faker.internet.email() } })
         const emailStatus = sut.getByTestId('email-status')
         expect(emailStatus.title).toBe('Tudo certo!')
         expect(emailStatus.textContent).toBe('🟢')
+    })
+
+    test('botao habilitar quando formulario tiver preenchido', () => {
+        const { sut, validationStub } = makeSut()
+        validationStub.errorMessage = null
+        const emailInput = sut.getByTestId('email')
+        fireEvent.input(emailInput, { target: { value: faker.internet.email() } })
+        const passwordInput = sut.getByTestId('password')
+        fireEvent.input(passwordInput, { target: { value: faker.internet.password() } })
+        const submitButton = sut.getByTestId('submit') as HTMLButtonElement
+        expect(submitButton.disabled).toBe(false)
     })
 })
