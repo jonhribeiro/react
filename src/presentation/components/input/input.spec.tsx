@@ -1,20 +1,30 @@
 import React from 'react'
-import { render, RenderResult } from '@testing-library/react'
+import faker from 'faker'
+import { render, RenderResult, fireEvent } from '@testing-library/react'
 import Input from './input'
 import Context from '@/presentation/contexts/form/form-context'
 
-const makeSut = (): RenderResult => {
- return render(
-    <Context.Provider value={{state: {} }}>
-        <Input name="field" />
-    </Context.Provider>
-)
+const makeSut = (fieldName: string): RenderResult => {
+    return render(
+        <Context.Provider value={{state: {} }}>
+            <Input name={fieldName} />
+        </Context.Provider>
+    )
 }
 
 describe('Input componente', () => {
     test('deve começar com somente leitura', () => {
-        const sut = makeSut()
-        const input = sut.getByTestId('field') as HTMLInputElement
+        const field = faker.database.column()
+        const sut = makeSut(field)
+        const input = sut.getByTestId(field) as HTMLInputElement
         expect(input.readOnly).toBe(true)
+    })
+
+    test('deve remover somente leitura em foco', () => {
+        const field = faker.database.column()
+        const sut = makeSut(field)
+        const input = sut.getByTestId(field) as HTMLInputElement
+        fireEvent.focus(input)
+        expect(input.readOnly).toBe(false)
     })
 })
