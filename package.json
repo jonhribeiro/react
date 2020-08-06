@@ -1,6 +1,6 @@
 {
   "name": "react-init",
-  "version": "1.0.1",
+  "version": "1.2.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -9,7 +9,8 @@
     "test:watch": "npm test -- --watch",
     "test:staged": "npm test -- --findRelatedTests",
     "test:ci": "npm test -- --coverage",
-    "xheck": "npm-check -u -s"
+    "test:coveralls": "npm run test:ci && coveralls < coverage/lcov.info",
+    "check": "npm-check -u -s"
   },
   "repository": {
     "type": "git",
@@ -42,6 +43,7 @@
     "@typescript-eslint/parser": "^3.7.0",
     "camelcase": "^6.0.0",
     "clean-webpack-plugin": "^3.0.0",
+    "coveralls": "^3.1.0",
     "css-loader": "^4.0.0",
     "eslint": "^7.5.0",
     "eslint-config-airbnb": "^18.2.0",
