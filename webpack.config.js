@@ -2,6 +2,8 @@
 const path = require('path')
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { DefinePlugin } = require('webpack')
 
 module.exports = {
     mode: 'development',
@@ -46,6 +48,9 @@ module.exports = {
         'react-dom': 'ReactDOM'
     },
     plugins: [
-        new CleanWebpackPlugin()
+        new CleanWebpackPlugin(),
+        new DefinePlugin({
+            'process.env.API_URL': 'http://fordevs.herokuapp.com/api'
+        })
     ]
 }
