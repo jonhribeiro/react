@@ -1,6 +1,6 @@
 import { AccountModel } from '@/domain/models/acount-model'
 
-export type AuthenticationParams = {
+export type AddAccountParams = {
   name: string
   email: string
   password: string
@@ -8,5 +8,5 @@ export type AuthenticationParams = {
 }
 
 export interface AddAccount {
-  add: (params: AddAccount) => Promise<AccountModel>
+  add: (params: AddAccountParams) => Promise<AccountModel>
 }
