@@ -1,6 +1,6 @@
 import { setStorage } from '../protocols/cache/set-storage'
 
-export class SetStorageSpy implements setStorage {
+export class SetStorageMock implements setStorage {
     key: string
     value: any
     
