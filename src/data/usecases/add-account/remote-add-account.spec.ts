@@ -4,7 +4,7 @@ import { AddAccountParams } from '@/domain/usercases'
 import { AccountModel } from '@/domain/models'
 import { mockAddAccountParams } from '@/domain/test'
 import { HttpStatusCode } from '@/data/protocols/http'
-import { EmailInUseError} from '@/domain/errors'
+import { EmailInUseError, UnexpectedError} from '@/domain/errors'
 import faker from 'faker'
 
 type SutTypes = {
@@ -43,5 +43,14 @@ describe('RemoteAddAccount', () => {
         }
         const promise = sut.add(mockAddAccountParams())
         await expect(promise).rejects.toThrow(new EmailInUseError())
-      })
+    })
+
+    test('deve mostra o erro inesperado erro 400', async () => {
+        const { sut, httpPostClientSpy } = makeSut()
+        httpPostClientSpy.response = {
+        statusCode: HttpStatusCode.badRequest
+        }
+        const promise = sut.add(mockAddAccountParams())
+        await expect(promise).rejects.toThrow(new UnexpectedError())
+    })
 })
