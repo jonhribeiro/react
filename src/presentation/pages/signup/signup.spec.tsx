@@ -67,4 +67,28 @@ describe('SignUp componente', () => {
         Helper.populateField(sut, 'passwordConfirmation')
         Helper.testStatusForField(sut, 'passwordConfirmation', validationError)
     })
+    
+    test('validar o campo name e passar na validacao', () => {
+        const { sut } = makeSut()
+        Helper.populateField(sut, 'name')
+        Helper.testStatusForField(sut, 'name')
+    })
+    
+    test('validar o campo email e passar na validacao', () => {
+        const { sut } = makeSut()
+        Helper.populateField(sut, 'email')
+        Helper.testStatusForField(sut, 'email')
+    })
+    
+    test('validar o campo password e passar na validacao', () => {
+        const { sut } = makeSut()
+        Helper.populateField(sut, 'password')
+        Helper.testStatusForField(sut, 'password')
+    })
+    
+    test('validar o campo passwordConfirmation e passar na validacao', () => {
+        const { sut } = makeSut()
+        Helper.populateField(sut, 'passwordConfirmation')
+        Helper.testStatusForField(sut, 'passwordConfirmation')
+    })
 })
