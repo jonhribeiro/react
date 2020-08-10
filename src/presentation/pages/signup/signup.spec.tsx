@@ -91,4 +91,13 @@ describe('SignUp componente', () => {
         Helper.populateField(sut, 'passwordConfirmation')
         Helper.testStatusForField(sut, 'passwordConfirmation')
     })
+    
+    test('botao habilitar quando formulario tiver preenchido', () => {
+        const { sut } = makeSut()
+        Helper.populateField(sut, 'name')
+        Helper.populateField(sut, 'email')
+        Helper.populateField(sut, 'password')
+        Helper.populateField(sut, 'passwordConfirmation')
+        Helper.testButtonIsDisabled(sut, 'submit', false)
+    })
 })
