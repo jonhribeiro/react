@@ -1,11 +1,12 @@
 import React from 'react'
 import SignUp from './signup'
-import { RenderResult, render, cleanup } from '@testing-library/react'
-import { Helper, ValidationStub } from '@/presentation/test'
+import { RenderResult, render, cleanup, fireEvent, waitFor } from '@testing-library/react'
+import { Helper, ValidationStub, AddAccountSpy } from '@/presentation/test'
 import faker from 'faker'
 
 type SutTypes = {
     sut: RenderResult
+    addAccountSpy: AddAccountSpy
 }
 
 type SutParams = {
@@ -13,18 +14,30 @@ type SutParams = {
 }
 
 const makeSut = (params?: SutParams): SutTypes => {
+    const addAccountSpy =  new AddAccountSpy()
     const validationStub = new ValidationStub()
     validationStub.errorMessage = params?.validationError
     const sut = render(
         <SignUp 
             validation={validationStub} 
+            addAccount={addAccountSpy} 
         />
     )
     return {
-        sut
+        sut,
+        addAccountSpy
     }
 }
 
+const simulateValidsubmit = async (sut: RenderResult, name= faker.name.findName(), email = faker.internet.email(), password = faker.internet.password()): Promise<void> => {
+    Helper.populateField(sut, 'name', name)
+    Helper.populateField(sut, 'email', email)
+    Helper.populateField(sut, 'password', password)
+    Helper.populateField(sut, 'passwordConfirmation', password)
+    const form = sut.getByTestId('form')
+    fireEvent.submit(form)
+    await waitFor(() => form)
+}
 
 describe('SignUp componente', () => {
     afterEach(cleanup)
@@ -99,5 +112,25 @@ describe('SignUp componente', () => {
         Helper.populateField(sut, 'password')
         Helper.populateField(sut, 'passwordConfirmation')
         Helper.testButtonIsDisabled(sut, 'submit', false)
+    })
+    
+    test('aparecer o spinner quando eu clicar no button para prosseguir', async () => {
+        const { sut } = makeSut()
+        await simulateValidsubmit(sut)
+        Helper.testElementExists(sut, 'spinner')
+    })
+
+    test('testar a AddAccount com os valores correto', async () => {
+        const { sut, addAccountSpy } = makeSut()
+        const name = faker.name.findName()
+        const email = faker.internet.email()
+        const password = faker.internet.password()
+        await simulateValidsubmit(sut, name, email, password)
+        expect(addAccountSpy.params).toEqual({
+            name,
+            email,
+            password,
+            passwordConfirmation: password
+        })
     })
 })

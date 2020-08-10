@@ -3,12 +3,14 @@ import Styles from './signup-styles.scss'
 import {Footer, LoginHeader, Input, FormStatus} from '@/presentation/components'
 import Context from '@/presentation/contexts/form/form-context'
 import { Validation } from '@/presentation/protocols/validation'
+import { AddAccount } from '@/domain/usercases'
 
 type Props = {
     validation: Validation
+    addAccount: AddAccount
 }
 
-const SignUp: React.FC<Props> = ({ validation }: Props) => {
+const SignUp: React.FC<Props> = ({ validation, addAccount }: Props) => {
     const [state, setState ] = useState ({
         isLoading: false,
         name: '',
@@ -32,12 +34,41 @@ const SignUp: React.FC<Props> = ({ validation }: Props) => {
         })
     
     }, [state.name, state.email, state.password, state.passwordConfirmation])
+    
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
+        event.preventDefault()
+        // try {
+            // se nao o loading retorna vamos ver se nao tem email ou password rettorna pra traz nao pode passar
+            // if (state.isLoading || state.emailError || state.passwordError) {
+            //     return
+            // }
+            setState({...state, isLoading: true})
+            await addAccount.add({
+                name: state.name,
+                email: state.email,
+                password: state.password,
+                passwordConfirmation: state.passwordConfirmation
+            })
+        //     const account = await authentication.auth({
+        //         email: state.email, 
+        //         password: state.password
+        //     })
+        //     await saveAccessToken.save(account.accessToken)
+        //     history.replace('/')
+        // } catch (error) {
+        //     setState({
+        //         ...state,
+        //         isLoading: false,
+        //         mainError: error.message
+        //     })
+        // }
+    }
 
     return (
         <div className={Styles.signup}>
             <LoginHeader />
             <Context.Provider value={ {state, setState } }>
-                <form className={Styles.form} >
+                <form data-testid="form" className={Styles.form} onSubmit={handleSubmit}>
                     <h2>Criar Conta</h2>
                     <Input type="text" name="name" placeholder="Digite seu nome"/>
                     <Input type="email" name="email" placeholder="Digite o E-mail"/>
