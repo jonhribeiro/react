@@ -39,9 +39,9 @@ const SignUp: React.FC<Props> = ({ validation, addAccount }: Props) => {
         event.preventDefault()
         // try {
             // se nao o loading retorna vamos ver se nao tem email ou password rettorna pra traz nao pode passar
-            // if (state.isLoading || state.emailError || state.passwordError) {
-            //     return
-            // }
+            if (state.isLoading) {
+                return
+            }
             setState({...state, isLoading: true})
             await addAccount.add({
                 name: state.name,
