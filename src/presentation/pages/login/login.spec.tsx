@@ -132,6 +132,14 @@ describe('login componente', () => {
         Helper.testElementText(sut, 'main-error', error.message)
         Helper.testChildCount(sut, 'error-wrap', 1)
     })
+    
+    test('deve adicionar SaveAccessToken em caso de sucesso', async () => {
+        const { sut, authenticationSpy, saveAccessTokenMock } = makeSut()
+        await simulateValidsubmit(sut)
+        expect(saveAccessTokenMock.accessToken).toBe(authenticationSpy.account.accessToken)
+        expect(history.length).toBe(1)
+        expect(history.location.pathname).toBe('/')
+    })
 
     test('deve apresentar erro se o SaveAccessToken falhar', async () => {
         const { sut, saveAccessTokenMock } = makeSut()
@@ -140,14 +148,6 @@ describe('login componente', () => {
         await simulateValidsubmit(sut)
         Helper.testElementText(sut, 'main-error', error.message)
         Helper.testChildCount(sut, 'error-wrap', 1)
-    })
-
-    test('deve adicionar SaveAccessToken em caso de sucesso', async () => {
-        const { sut, authenticationSpy, saveAccessTokenMock } = makeSut()
-        await simulateValidsubmit(sut)
-        expect(saveAccessTokenMock.accessToken).toBe(authenticationSpy.account.accessToken)
-        expect(history.length).toBe(1)
-        expect(history.location.pathname).toBe('/')
     })
 
     test('deve ir para a página de inscrição', async () => {
