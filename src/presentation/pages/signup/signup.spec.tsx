@@ -140,4 +140,11 @@ describe('SignUp componente', () => {
         await simulateValidsubmit(sut)
         expect(addAccountSpy.callsCount).toBe(1)
     })
+    
+    test('não deve chamar a AddAccount se o formulário for inválido', async () => {
+        const validationError = faker.random.words()
+        const { sut, addAccountSpy } = makeSut({validationError})
+        await simulateValidsubmit(sut)
+        expect(addAccountSpy.callsCount).toBe(0)
+    })
 })
