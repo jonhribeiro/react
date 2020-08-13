@@ -37,7 +37,7 @@ const SignUp: React.FC<Props> = ({ validation, addAccount }: Props) => {
     
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
         event.preventDefault()
-        // try {
+        try {
             // se nao o loading retorna vamos ver se nao tem email ou password rettorna pra traz nao pode passar
             if (state.isLoading || state.nameError || state.emailError || state.passwordError || state.passwordConfirmationError) {
                 return
@@ -49,19 +49,19 @@ const SignUp: React.FC<Props> = ({ validation, addAccount }: Props) => {
                 password: state.password,
                 passwordConfirmation: state.passwordConfirmation
             })
-        //     const account = await authentication.auth({
-        //         email: state.email, 
-        //         password: state.password
-        //     })
-        //     await saveAccessToken.save(account.accessToken)
-        //     history.replace('/')
-        // } catch (error) {
-        //     setState({
-        //         ...state,
-        //         isLoading: false,
-        //         mainError: error.message
-        //     })
-        // }
+            // const account = await authentication.auth({
+            //     email: state.email, 
+            //     password: state.password
+            // })
+            // await saveAccessToken.save(account.accessToken)
+            // history.replace('/')
+        } catch (error) {
+            setState({
+                ...state,
+                isLoading: false,
+                mainError: error.message
+            })
+        }
     }
 
     return (
