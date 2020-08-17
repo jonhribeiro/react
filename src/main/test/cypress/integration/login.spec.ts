@@ -47,10 +47,10 @@ describe('Login', () => {
         cy.getByTestId('error-wrap').should('not.have.descendants') 
     })
 
-    it('deve apresentar erro se forem fornecidas credenciais inválidas', () => {
+    it('deve apresentar erro se forem fornecidas credenciais inválidas erro 401', () => {
         cy.route({
             method: 'POST',
-            url:'/login/',
+            url: /login/,
             status: 401,
             response: {
                 error: faker.random.words()
@@ -65,13 +65,49 @@ describe('Login', () => {
         cy.url().should('eq', `${baseUrl}/login`)
     })
 
-    it('deve apresentar save accesToken se credenciais válidas forem fornecidas', () => {
+    it('deve apresentar erro se forem fornecidas credenciais inválidas erro 400', () => {
         cy.route({
             method: 'POST',
-            url:'/login/',
+            url: /login/,
+            status: 400,
+            response: {
+                error: faker.random.words()
+                
+            }
+        })
+        cy.getByTestId('email').focus().type(faker.internet.email())
+        cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
+        cy.getByTestId('submit').click()
+        cy.getByTestId('spinner').should('not.exist')
+        cy.getByTestId('main-error').should('contain.text', 'Algo errado aconteceu. tente novamente mais tarde')
+        cy.url().should('eq', `${baseUrl}/login`)
+    })
+    
+    it('deve apresentar UnexpectedError se dados inválidos forem retornados', () => { 
+        cy.route({
+            method: 'POST',
+            url: /login/,
             status: 200,
             response: {
-                xxx: faker.random.uuid()
+                invalidProperty: faker.random.uuid()
+                
+            }
+        })
+        cy.getByTestId('email').focus().type(faker.internet.email())
+        cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
+        cy.getByTestId('submit').click()
+        cy.getByTestId('spinner').should('not.exist')
+        cy.getByTestId('main-error').should('contain.text', 'Algo errado aconteceu. tente novamente mais tarde')
+        cy.url().should('eq', `${baseUrl}/login`)
+    })
+
+    it('deve apresentar save accesToken se credenciais válidas forem fornecidas', () => { 
+        cy.route({
+            method: 'POST',
+            url: /login/,
+            status: 200,
+            response: {
+                accessToken: faker.random.uuid()
                 
             }
         })
