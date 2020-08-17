@@ -135,4 +135,19 @@ describe('Login', () => {
         cy.get('@request.all').should('have.length', 1)
 
     })
+
+    it('deve previnir click faltando dados no formulario', () => { 
+        cy.route({
+            method: 'POST',
+            url: /login/,
+            status: 200,
+            response: {
+                accessToken: faker.random.uuid()
+                
+            }
+        }).as('request')
+        cy.getByTestId('email').focus().type(faker.internet.email()).type('{enter}')
+        cy.get('@request.all').should('have.length', 0)
+
+    })
 })
