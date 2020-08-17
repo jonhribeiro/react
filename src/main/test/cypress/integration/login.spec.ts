@@ -120,7 +120,7 @@ describe('Login', () => {
         cy.window().then(window => assert.isOk(window.localStorage.getItem('accessToken')))
     })
 
-    it('deve previnir varios click no input ', () => { 
+    it('deve previnir varios click no input', () => { 
         cy.route({
             method: 'POST',
             url: /login/,
