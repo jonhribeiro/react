@@ -64,4 +64,11 @@ describe('SignUp', () => {
         FormHelper.testMainError('Esse e-mail ja consta em nosso sistema')
         FormHelper.testUrl('/signup')
     })
+    
+    it('deve apresentar erro se forem fornecidas credenciais inválidas error 400, 404, 500', () => {
+        Http.mockUnexpectedError()
+        simulateValidSubmit()
+        FormHelper.testMainError('Algo errado aconteceu. tente novamente mais tarde')
+        FormHelper.testUrl('/signup')
+    })
 })
