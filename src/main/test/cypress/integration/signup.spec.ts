@@ -97,4 +97,11 @@ describe('SignUp', () => {
         FormHelper.testHttpCallsCount(1)
 
     })
+    
+    it('deve previnir click faltando dados no formulario', () => { 
+        Http.mockOk()
+        cy.getByTestId('email').focus().type(faker.internet.email()).type('{enter}')
+        FormHelper.testHttpCallsCount(0)
+
+    })
 })
