@@ -20,25 +20,27 @@ const makeSut = (): SutTypes => {
 }
 
 describe('AxiosHttpClient', () => {
-    test('deve chamar axios com o URL correto com valores', async () => {
-        const request = mockPostRequest()
-        const {sut, mockedAxios} = makeSut()
-        await sut.post(request)
-        expect(mockedAxios.post).toHaveBeenCalledWith(request.url, request.body)
-    }) 
+    describe('post', () => {
+        test('deve chamar axios.post com o URL correto com valores', async () => {
+            const request = mockPostRequest()
+            const {sut, mockedAxios} = makeSut()
+            await sut.post(request)
+            expect(mockedAxios.post).toHaveBeenCalledWith(request.url, request.body)
+        }) 
 
-    test('deve retornar o código de status e o corpo corretos', () => {
-        const {sut, mockedAxios} = makeSut()
-        const promise = sut.post(mockPostRequest())
-        expect(promise).toEqual(mockedAxios.post.mock.results[0].value)
-    }) 
+        test('deve retornar o código de status corretos com axios.post', () => {
+            const {sut, mockedAxios} = makeSut()
+            const promise = sut.post(mockPostRequest())
+            expect(promise).toEqual(mockedAxios.post.mock.results[0].value)
+        }) 
 
-    test('deve retornar o statusCode e o corpo corretos em caso de falha', () => {
-        const {sut, mockedAxios} = makeSut()
-        mockedAxios.post.mockRejectedValueOnce({
-            response: mockHttpResponse()
-        })
-        const promise = sut.post(mockPostRequest())
-        expect(promise).toEqual(mockedAxios.post.mock.results[0].value)
-    }) 
+        test('deve retornar o statusCode corretos em caso de falha axios.post', () => {
+            const {sut, mockedAxios} = makeSut()
+            mockedAxios.post.mockRejectedValueOnce({
+                response: mockHttpResponse()
+            })
+            const promise = sut.post(mockPostRequest())
+            expect(promise).toEqual(mockedAxios.post.mock.results[0].value)
+        }) 
+    })
 })
