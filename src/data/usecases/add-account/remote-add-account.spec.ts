@@ -72,13 +72,13 @@ describe('RemoteAddAccount', () => {
     })
 
     test('deve retornar AccountModel e HttpPostClient retornar 200 caso de sucesso', async () => {
-        const { sut, httpPostClientSpy } = makeSut()
-        const httResult = mockAcountModel()
-        httpPostClientSpy.response = {
-          statusCode: HttpStatusCode.ok,
-          body: httResult
-        }
-        const account = await sut.add(mockAddAccountParams())
-        expect(account).toEqual(httResult)
-      })
+      const { sut, httpPostClientSpy } = makeSut()
+      const httResult = mockAcountModel()
+      httpPostClientSpy.response = {
+        statusCode: HttpStatusCode.ok,
+        body: httResult
+      }
+      const account = await sut.add(mockAddAccountParams())
+      expect(account).toEqual(httResult)
+    })
 })
