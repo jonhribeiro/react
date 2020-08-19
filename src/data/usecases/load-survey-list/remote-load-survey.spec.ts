@@ -64,5 +64,14 @@ describe('RemoteLoadSurveyList', () => {
         }
         const surveyList = await sut.loadAll()
         expect(surveyList).toEqual(httResult)
-      })
+    })
+
+    test('deve retornar uma lista vazia e httpGetClientSpy retornar erro 204', async () => {
+        const { sut, httpGetClientSpy } = makeSut()
+        httpGetClientSpy.response = {
+          statusCode: HttpStatusCode.noContent
+        }
+        const surveyList = await sut.loadAll()
+        expect(surveyList).toEqual([])
+    })
 })
