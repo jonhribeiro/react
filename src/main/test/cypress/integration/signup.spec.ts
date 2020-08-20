@@ -87,7 +87,7 @@ describe('SignUp', () => {
         simulateValidSubmit()
         cy.getByTestId('error-wrap').should('not.have.descendants')
         FormHelper.testUrl('/')
-        FormHelper.testLocalStorageItem('accessToken')
+        FormHelper.testLocalStorageItem('account') 
     })
 
     it('deve previnir varios click no input', () => { 
