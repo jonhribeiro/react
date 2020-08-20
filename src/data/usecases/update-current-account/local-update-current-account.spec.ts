@@ -1,5 +1,5 @@
-import { SetStorageMock } from '@/data/test'
 import { LocalUpdateCurrentAccount } from './local-update-current-account'
+import { SetStorageMock } from '@/data/test'
 import { UnexpectedError } from "@/domain/errors"
 import { mockAcountModel } from '@/domain/test'
 
@@ -28,7 +28,7 @@ describe('LocalUpdateCurrentAccount', () => {
 
     test('deve lançar mesmo se der erxercao no SetStorage lança deixa passar', async () => {
         const {sut, setStorageMock } = makeSut()
-        jest.spyOn(setStorageMock, 'set').mockRejectedValueOnce(new Error())
+        jest.spyOn(setStorageMock, 'set').mockImplementationOnce(() => { throw new Error() })
         const promise = sut.save(mockAcountModel())
         await expect(promise).rejects.toThrow(new Error())
     })

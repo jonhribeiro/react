@@ -11,7 +11,7 @@ describe('LocalStorageAdapter', () => {
       const sut = new LocalStorageAdapter()
       const key = faker.database.column()
       const value = faker.random.word()
-      await sut.set(key, value)
+      sut.set(key, value)
       expect(localStorage.setItem).toHaveBeenCalledWith(key, value)
     })
 })
