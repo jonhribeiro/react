@@ -4,7 +4,7 @@ import { makeLogin } from '@/main/factories/pages/login/login-factory'
 import { makeSignUp } from '@/main/factories/pages/signup/signup-factory'
 import { ApiContext } from '@/presentation/contexts'
 import { SurveyList } from '@/presentation/pages'
-import { setCurrentAccountAdapter } from '../adapter/current-account-adapter'
+import { setCurrentAccountAdapter } from '@/main/adapter/current-account-adapter'
 
 const Router: React.FC = () => {
     return (
