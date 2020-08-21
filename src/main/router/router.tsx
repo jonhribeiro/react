@@ -6,9 +6,6 @@ import { ApiContext } from '@/presentation/contexts'
 import { SurveyList } from '@/presentation/pages'
 import { setCurrentAccountAdapter } from '../adapter/current-account-adapter'
 
-
-
-
 const Router: React.FC = () => {
     return (
         <ApiContext.Provider 
