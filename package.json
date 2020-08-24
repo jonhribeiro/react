@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "@cypress/webpack-preprocessor": "^5.4.4",
+    "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^10.4.7",
     "@types/axios": "^0.14.0",
     "@types/faker": "^4.1.12",
