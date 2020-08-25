@@ -4,11 +4,16 @@ import { mockSurveyModel } from '@/domain/test'
 import { IconName } from '@/presentation/components'
 import React from 'react'
 
+const makeSut = (survey = mockSurveyModel()): void => {
+    render(<SurveyItem survey={survey} />)
+}
+
 describe('SurveyItem Componente', () => {
   test('renderizar o componete com valores correto', () => {
-    const survey = mockSurveyModel()
-    survey.diaAnswer = true
-    survey.date = new Date('2020-08-25T00:00:00')
+    const survey = Object.assign(mockSurveyModel(), {
+        diaAnswer: true,
+        date: new Date('2020-08-25T00:00:00')
+    })
     render(<SurveyItem survey={survey} />)
     expect(screen.getByTestId('icon')).toHaveProperty('src', IconName.thumbUp )
     expect(screen.getByTestId('question')).toHaveTextContent(survey.question)
