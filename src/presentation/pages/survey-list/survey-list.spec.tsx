@@ -32,7 +32,7 @@ describe('SurveyList Componente', () => {
     expect(surveyList.querySelectorAll('li:empty').length).toBe(4)
   })
 
-  test('deve chamar LoadSurveyList', () => {
+  test('deve chamar LoadSurveyList index', () => {
     const { loadSurveyListSpy } = makesut()
     expect(loadSurveyListSpy.callsCount).toBe(1)
   })
