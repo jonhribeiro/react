@@ -1,15 +1,16 @@
 import React from 'react'
-import { render, screen} from '@testing-library/react'
+import { render, screen, waitFor, getByRole} from '@testing-library/react'
 import { SurveyList } from '@/presentation/pages'
 import { LoadSurveyList } from '@/domain/usercases'
 import { SurveyModel } from '@/domain/models'
-import { type } from 'os'
+import { mockSurveyListModel } from '@/domain/test'
 
 class LoadSurveyListSpy implements LoadSurveyList {
     callsCount = 0
+    surveys = mockSurveyListModel()
     async loadAll (): Promise<SurveyModel[]> {
         this.callsCount++
-        return []
+        return this.surveys
     }
 }
 
@@ -26,14 +27,23 @@ const makesut = (): SutTypes => {
 }
 
 describe('SurveyList Componente', () => {
-  test('testando o estado inicial da pagina com 4 itens', () => {
+  test('testando o estado inicial da pagina com 4 itens', async () => {
     makesut()
     const surveyList = screen.getByTestId('survey-list')
-    expect(surveyList.querySelectorAll('li:empty').length).toBe(4)
+    expect(surveyList.querySelectorAll('li:empty')).toHaveLength(4)
+    await waitFor(() => surveyList)
   })
 
-  test('deve chamar LoadSurveyList index', () => {
+  test('deve chamar LoadSurveyList ', async () => {
     const { loadSurveyListSpy } = makesut()
     expect(loadSurveyListSpy.callsCount).toBe(1)
+    await waitFor(() => screen.getByRole('heading'))
+  })
+
+  test('deve chamar LoadSurveyList caso de sucesso', async () => {
+    makesut()
+    const surveyList = screen.getByTestId('survey-list')
+    await waitFor(() => surveyList)
+    expect(surveyList.querySelectorAll('li.surveyItemWrap')).toHaveLength(3)
   })
 })
