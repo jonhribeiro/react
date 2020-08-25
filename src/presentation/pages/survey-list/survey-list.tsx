@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
 import Styles from './survey-list-styles.scss'
 import { Header, Footer } from '@/presentation/components'
 import { SurveyItemEmpty, SurveyItem } from '@/presentation/pages/survey-list/components'
 import { LoadSurveyList } from '@/domain/usercases'
+import React, { useEffect, useState } from 'react'
 import { SurveyModel } from '@/domain/models'
 
 type Props = {
