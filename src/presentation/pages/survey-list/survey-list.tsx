@@ -10,9 +10,6 @@ const SurveyList: React.FC = () => {
                 <h2>Enquete</h2>
                 <ul>
                     
-
-                    <li></li>
-                    <li></li>
                 </ul>
             </div>
             <Footer />
