@@ -5,13 +5,14 @@ import faker from 'faker'
 import { render, fireEvent, waitFor, screen } from '@testing-library/react'
 import { ApiContext } from '@/presentation/contexts'
 import {Login} from '@/presentation/pages'
-import { ValidationStub, AuthenticationSpy, Helper } from '@/presentation/test'
+import { ValidationStub, Helper } from '@/presentation/test'
 import { InvalidCredentialsError } from '@/domain/errors'
-import { AccountModel } from '@/domain/models'
+import { Authentication } from '@/domain/usercases'
+import { Authenticationspy } from '@/domain/test'
 
 type SutTypes = {
-    authenticationSpy: AuthenticationSpy
-    setCurrentAccountMock: (account: AccountModel) => void
+    authenticationSpy: Authenticationspy
+    setCurrentAccountMock: (account: Authentication.Model) => void
 }
 
 type SutParams = {
@@ -23,7 +24,7 @@ const history = createMemoryHistory({ initialEntries: ['/login'] })
 const makeSut = (params?: SutParams): SutTypes => {
     const validationStub = new ValidationStub()
     validationStub.errorMessage = params?.validationError
-    const authenticationSpy = new AuthenticationSpy()
+    const authenticationSpy = new Authenticationspy()
     const setCurrentAccountMock = jest.fn()
     render(
         <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock }}>
