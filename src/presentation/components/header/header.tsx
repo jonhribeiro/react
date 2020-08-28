@@ -8,7 +8,7 @@ const Header: React.FC = () => {
             <div className={Styles.headerContent}>
                 <Logo />
                 <div className={Styles.logoutWrap}>
-                    <span> Jonh</span>
+                    <span>Jonh</span>
                     <a href="#">Sair</a>
                 </div>
             </div>
