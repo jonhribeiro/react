@@ -1,4 +1,4 @@
-import * as Helper from '../support/helpers'
+import * as Helper from '../utils/helpers'
 
 describe('Private Routes', () => {
     it('deve sair se a lista não tiver token', () => {
