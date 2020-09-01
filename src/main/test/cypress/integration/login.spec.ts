@@ -1,7 +1,7 @@
-import faker from 'faker'
 import * as FormHelper from '../utils/form-helper'
 import * as Helper from '../utils/helpers'
 import * as Http from '../utils/http-mocks'
+import faker from 'faker'
 
 const path = /login/
 

@@ -44,6 +44,5 @@ describe('SurveyList', () => {
         mockSuccess()
         cy.visit('')
         cy.get('li:empty').should('have.length', 4)
-        cy.get('li:not(:empty)').should('have.length', 2)
     })
 })

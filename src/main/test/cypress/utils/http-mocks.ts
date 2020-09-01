@@ -36,6 +36,7 @@ export const mockServerError = (url: RegExp, method: string): void => {
     }).as('request')
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const mockOk = (url: RegExp, method: string, response: any): void => {
     cy.server()
     cy.route({
