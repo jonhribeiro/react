@@ -1,6 +1,13 @@
+import * as FormHelper from '../utils/form-helper'
+import * as Helper from '../utils/helpers'
+import * as Http from '../utils/http-mocks'
 import faker from 'faker'
-import * as FormHelper from '../support/form-helper'
-import * as Http from '../support/login-mocks'
+
+const path = /login/
+
+const mockInvalidCredentialsError = (): void => Http.mockUnauthorizedError(path)
+const mockUnexpectedError = (): void => Http.mockServerError(path, 'POST')
+const mockSuccess = (): void => Http.mockOk(path, 'POST', 'fx:account')
 
 const populateFields = (): void => {
     cy.getByTestId('email').focus().type(faker.internet.email())
@@ -45,46 +52,39 @@ describe('Login', () => {
     })
 
     it('deve apresentar erro se forem fornecidas credenciais inválidas erro 401', () => {
-        Http.mockInvalidCredentialsError()
+        mockInvalidCredentialsError()
         simulateValidSubmit()
         FormHelper.testMainError('Credenciais Invalidas')
-        FormHelper.testUrl('/login')
+        Helper.testUrl('/login')
     })
 
     it('deve apresentar erro se forem fornecidas credenciais inválidas error 400, 404, 500 ', () => {
-        Http.mockUnexpectedError()
+        mockUnexpectedError()
         simulateValidSubmit()
         FormHelper.testMainError('Algo errado aconteceu. tente novamente mais tarde')
-        FormHelper.testUrl('/login')
-    })
-    
-    it('deve apresentar UnexpectedError se dados inválidos forem retornados', () => { 
-        Http.mockInvalidData()
-        simulateValidSubmit()
-        FormHelper.testMainError('Algo errado aconteceu. tente novamente mais tarde')
-        FormHelper.testUrl('/login')
+        Helper.testUrl('/login')
     })
 
     it('deve apresentar save accesToken se credenciais válidas forem fornecidas', () => { 
-        Http.mockOk()
+        mockSuccess()
         simulateValidSubmit()
         cy.getByTestId('error-wrap').should('not.have.descendants')
-        FormHelper.testUrl('/')
-        FormHelper.testLocalStorageItem('account')
+        Helper.testUrl('/')
+        Helper.testLocalStorageItem('account')
     })
 
     it('deve previnir varios click no input', () => { 
-        Http.mockOk()
+        mockSuccess()
         populateFields()
         cy.getByTestId('submit').dblclick()
-        FormHelper.testHttpCallsCount(1)
+        Helper.testHttpCallsCount(1)
 
     })
 
     it('deve previnir click faltando dados no formulario', () => { 
-        Http.mockOk()
+        mockSuccess()
         cy.getByTestId('email').focus().type(faker.internet.email()).type('{enter}')
-        FormHelper.testHttpCallsCount(0)
+        Helper.testHttpCallsCount(0)
 
     })
 })

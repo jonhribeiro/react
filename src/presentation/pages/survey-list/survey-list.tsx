@@ -9,7 +9,7 @@ type Props = {
     loadSurveyList: LoadSurveyList
 }
 
-const SurveyList: React.FC<Props> = ({loadSurveyList}: Props) => {
+const SurveyList: React.FC<Props> = ({ loadSurveyList }: Props) => {
     const handleError = useErrorHandler((error: Error) => {
         setState({ ...state, error: error.message })
     })

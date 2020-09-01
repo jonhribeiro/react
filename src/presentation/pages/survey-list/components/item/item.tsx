@@ -1,14 +1,14 @@
 import Styles from './item-styles.scss'
+import { LoadSurveyList } from '@/domain/usercases'
 import { IconName, Icon } from '@/presentation/components'
 import React from 'react'
-import { LoadSurveyList } from '@/domain/usercases'
 
 type Props = {
   survey: LoadSurveyList.Model
 }
 
 const SurveyItem: React.FC<Props> = ({survey}: Props) => {
-  const iconName = survey.diaAnswer ? IconName.thumbUp : IconName.thumbDown
+  const iconName = survey.didAnswer ? IconName.thumbUp : IconName.thumbDown
   return (
      <li className={Styles.surveyItemWrap}>
         <div className={Styles.surveyContent}>

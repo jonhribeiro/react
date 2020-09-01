@@ -64,19 +64,19 @@ describe('RemoteLoadSurveyList', () => {
         expect(surveyList).toEqual([{
           id: httpResult[0].id,
           question: httpResult[0].question,
-          diaAnswer: httpResult[0].diaAnswer,
+          didAnswer: httpResult[0].didAnswer,
           date: new Date(httpResult[0].date)
         }, {
           id: httpResult[1].id,
           question: httpResult[1].question,
-          diaAnswer: httpResult[1].diaAnswer,
+          didAnswer: httpResult[1].didAnswer,
           date: new Date(httpResult[1].date)
         }, {
           id: httpResult[2].id,
           question: httpResult[2].question,
-          diaAnswer: httpResult[2].diaAnswer,
+          didAnswer: httpResult[2].didAnswer,
           date: new Date(httpResult[2].date)
-        },
+        }
       ])
     })
 

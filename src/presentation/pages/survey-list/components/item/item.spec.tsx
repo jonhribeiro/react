@@ -11,7 +11,7 @@ const makeSut = (survey = mockSurveyModel()): void => {
 describe('SurveyItem Componente', () => {
   test('renderizar o componete com valores correto', () => {
     const survey = Object.assign(mockSurveyModel(), {
-        diaAnswer: true,
+        didAnswer: true,
         date: new Date('2020-08-25T00:00:00')
     })
     makeSut(survey)
@@ -24,7 +24,7 @@ describe('SurveyItem Componente', () => {
 
   test('renderizar o componete com valores correto', () => {
     const survey = Object.assign(mockSurveyModel(), {
-        diaAnswer: false,
+        didAnswer: false,
         date: new Date('2019-05-03T00:00:00')
     })
     makeSut(survey)

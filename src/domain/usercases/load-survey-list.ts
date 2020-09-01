@@ -7,6 +7,6 @@ export namespace LoadSurveyList {
     id: string
     question: string
     date: Date
-    diaAnswer: boolean
+    didAnswer: boolean
   }
 }
