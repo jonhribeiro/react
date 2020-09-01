@@ -4,7 +4,7 @@ import { LoadSurveyList } from '@/domain/usercases'
 export const mockSurveyModel = (): LoadSurveyList.Model => ({
     id: faker.random.uuid(),
     question: faker.random.words(10),
-    diaAnswer: faker.random.boolean(),
+    didAnswer: faker.random.boolean(),
     date: faker.date.recent()
 })
 

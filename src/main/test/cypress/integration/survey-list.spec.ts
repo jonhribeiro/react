@@ -5,6 +5,7 @@ const path = /surveys/
 
 const mockUnexpectedError = (): void => Http.mockServerError(path, 'GET')
 const mockAccessDeniedError = (): void => Http.mockForbiddenError(path, 'GET')
+const mockSuccess = (): void => Http.mockOk(path, 'GET', 'fix:survey-list')
 
 describe('SurveyList', () => {
     beforeEach(() => {
@@ -37,5 +38,12 @@ describe('SurveyList', () => {
         cy.visit('')
         cy.getByTestId('logout').click()
         Helper.testUrl('/login')
+    })
+    
+    it('deve apresentar itens de pesquisa', () => {
+        mockSuccess()
+        cy.visit('')
+        cy.get('li:empty').should('have.length', 4)
+        cy.get('li:not(:empty)').should('have.length', 2)
     })
 })

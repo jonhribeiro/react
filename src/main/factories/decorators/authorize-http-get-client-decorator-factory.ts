@@ -1,6 +1,6 @@
 import { AuthorizeHttpGetClientDecorator } from '@/main/decorators'
-import { makeLocalStorageAdapter } from '@/main/factories/cache'
 import { makeAxiosHttpClient } from '@/main/factories/http'
+import { makeLocalStorageAdapter } from '@/main/factories/cache'
 import { HttpGetClient } from '@/data/protocols/http'
 
 export const makeAuthorizeHttpGetClientDecorator = (): HttpGetClient => {
