@@ -7,29 +7,29 @@ import { ApiContext } from '@/presentation/contexts'
 import { mockAccountModel } from '@/domain/test'
 
 type SutTypes = {
-    history: MemoryHistory
+  history: MemoryHistory
 }
 
 const makeSut = (account = mockAccountModel()): SutTypes => {
-    const history = createMemoryHistory({ initialEntries: ['/'] })
-    render(
-        <ApiContext.Provider value={{ getCurrentAccount: () => account }} >
-            <Router history={history}>
-                <PrivateRoute />
-            </Router>
-        </ApiContext.Provider>
-    )
-    return { history }
+  const history = createMemoryHistory({ initialEntries: ['/'] })
+  render(
+    <ApiContext.Provider value={{ getCurrentAccount: () => account }} >
+      <Router history={history}>
+        <PrivateRoute />
+      </Router>
+    </ApiContext.Provider>
+  )
+  return { history }
 }
 
 describe('PrivateRoute', () => {
-    test('Rediricionar para logim se nao tiver o token de acesso', () => {
-        const { history } = makeSut(null)
-        expect(history.location.pathname).toBe('/login')
-    })
+  test('Rediricionar para logim se nao tiver o token de acesso', () => {
+    const { history } = makeSut(null)
+    expect(history.location.pathname).toBe('/login')
+  })
 
-    test('deve renderizar o componente atual se o token não estiver vazio', () => {
-        const { history } = makeSut()
-        expect(history.location.pathname).toBe('/')
-    })
+  test('deve renderizar o componente atual se o token não estiver vazio', () => {
+    const { history } = makeSut()
+    expect(history.location.pathname).toBe('/')
+  })
 })

@@ -4,6 +4,5 @@ import { LoadSurveyList } from '@/domain/usercases'
 import { RemoteLoadSurveyList } from '@/data/usecases'
 
 export const makeRemoteLoadSurveyList = (): LoadSurveyList => {
-    return new RemoteLoadSurveyList(makeApiUrl('/surveys'), makeAuthorizeHttpGetClientDecorator())
-
+  return new RemoteLoadSurveyList(makeApiUrl('/surveys'), makeAuthorizeHttpGetClientDecorator())
 }
