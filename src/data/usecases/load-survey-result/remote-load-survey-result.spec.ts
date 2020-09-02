@@ -2,12 +2,25 @@ import { HttpGetClientSpy } from '@/data/test'
 import { RemoteLoadSurveyResult } from '@/data/usecases'
 import faker from 'faker'
 
+type SutTypes = {
+  sut: RemoteLoadSurveyResult
+  httpGetClientSpy: HttpGetClientSpy
+}
+
+const makeSut = (url = faker.internet.url()): SutTypes => {
+  const httpGetClientSpy = new HttpGetClientSpy()
+  const sut = new RemoteLoadSurveyResult(url, httpGetClientSpy)
+  return {
+    sut,
+    httpGetClientSpy
+  }
+}
+
 describe('RemoteLoadSurveyResult', () => {
   test('deve chamar HttpGetClient com url correto', async () => {
     const url = faker.internet.url()
-    const httpGetClient = new HttpGetClientSpy()
-    const sut = new RemoteLoadSurveyResult(url, httpGetClient)
+    const { sut, httpGetClientSpy } = makeSut(url)
     await sut.load()
-    expect(httpGetClient.url).toBe(url)
+    expect(httpGetClientSpy.url).toBe(url)
   })
 })
