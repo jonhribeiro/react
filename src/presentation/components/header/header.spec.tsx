@@ -8,37 +8,37 @@ import { AccountModel } from '@/domain/models'
 import { mockAccountModel } from '@/domain/test'
 
 type SutTypes = {
-    history: MemoryHistory
-    setCurrentAccountMock: (account: AccountModel) => void
+  history: MemoryHistory
+  setCurrentAccountMock: (account: AccountModel) => void
 }
 
 const makeSut = (account = mockAccountModel()): SutTypes => {
-    const history = createMemoryHistory({ initialEntries: ['/'] })
-    const setCurrentAccountMock = jest.fn()
-    render(
-        <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock, getCurrentAccount: () => account }}>
-            <Router history={history}>
-                <Header />
-            </Router>
-        </ApiContext.Provider>
-    )
-    return {
-        history,
-        setCurrentAccountMock
-    }
+  const history = createMemoryHistory({ initialEntries: ['/'] })
+  const setCurrentAccountMock = jest.fn()
+  render(
+    <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock, getCurrentAccount: () => account }}>
+      <Router history={history}>
+        <Header />
+      </Router>
+    </ApiContext.Provider>
+  )
+  return {
+    history,
+    setCurrentAccountMock
+  }
 }
 
 describe('Header Component', () => {
-    test('deve chamar SetCurrentAccount com null', () => {
-        const { history, setCurrentAccountMock } = makeSut()
-        fireEvent.click(screen.getByTestId('logout'))
-        expect(setCurrentAccountMock).toHaveBeenCalledWith(undefined)
-        expect(history.location.pathname).toBe('/login')
-    })
+  test('deve chamar SetCurrentAccount com null', () => {
+    const { history, setCurrentAccountMock } = makeSut()
+    fireEvent.click(screen.getByTestId('logout'))
+    expect(setCurrentAccountMock).toHaveBeenCalledWith(undefined)
+    expect(history.location.pathname).toBe('/login')
+  })
 
-    test('deve chamar com nome do usuario correto', () => {
-        const account = mockAccountModel()
-        makeSut(account)
-        expect(screen.getByTestId('username')).toHaveTextContent(account.name)
-    })
+  test('deve chamar com nome do usuario correto', () => {
+    const account = mockAccountModel()
+    makeSut(account)
+    expect(screen.getByTestId('username')).toHaveTextContent(account.name)
+  })
 })

@@ -1,5 +1,5 @@
 import Styles from './error-styles.scss'
-import {SurveyContext } from '@/presentation/pages/survey-list/components'
+import { SurveyContext } from '@/presentation/pages/survey-list/components'
 import React, { useContext } from 'react'
 
 const Error: React.FC = () => {
@@ -10,8 +10,8 @@ const Error: React.FC = () => {
 
   return (
     <div className={Styles.errorWrap}>
-        <span data-testid="error">{state.error}</span>
-        <button data-testid="reload" onClick={reload}>Tentar Novamente</button> 
+      <span data-testid="error">{state.error}</span>
+      <button data-testid="reload" onClick={reload}>Tentar Novamente</button>
     </div>
   )
 }

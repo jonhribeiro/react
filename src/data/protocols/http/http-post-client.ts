@@ -1,4 +1,4 @@
-import { HttpResponse } from ".";
+import { HttpResponse } from '.'
 
 export type HttpPostParams = {
   url: string
@@ -8,4 +8,3 @@ export type HttpPostParams = {
 export interface HttpPostClient<R = any> {
   post: (params: HttpPostParams) => Promise<HttpResponse<R>>
 }
-  

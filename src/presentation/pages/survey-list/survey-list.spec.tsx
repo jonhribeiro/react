@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen, waitFor, fireEvent} from '@testing-library/react'
+import { render, screen, waitFor, fireEvent } from '@testing-library/react'
 import { SurveyList } from '@/presentation/pages'
 import { LoadSurveyList } from '@/domain/usercases'
 import { mockSurveyListModel, mockAccountModel } from '@/domain/test'
@@ -10,36 +10,36 @@ import { createMemoryHistory, MemoryHistory } from 'history'
 import { AccountModel } from '@/domain/models'
 
 class LoadSurveyListSpy implements LoadSurveyList {
-    callsCount = 0
-    surveys = mockSurveyListModel()
-    async loadAll (): Promise<LoadSurveyList.Model[]> {
-        this.callsCount++
-        return this.surveys
-    }
+  callsCount = 0
+  surveys = mockSurveyListModel()
+  async loadAll (): Promise<LoadSurveyList.Model[]> {
+    this.callsCount++
+    return this.surveys
+  }
 }
 
 type SutTypes = {
-    loadSurveyListSpy: LoadSurveyListSpy
-    history: MemoryHistory
-    setCurrentAccountMock: (account: AccountModel) => void
+  loadSurveyListSpy: LoadSurveyListSpy
+  history: MemoryHistory
+  setCurrentAccountMock: (account: AccountModel) => void
 }
 
 const makesut = (loadSurveyListSpy = new LoadSurveyListSpy()): SutTypes => {
   const history = createMemoryHistory({ initialEntries: ['/'] })
   const setCurrentAccountMock = jest.fn()
-    render(
-      <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock, getCurrentAccount: () => mockAccountModel() }}>
-        <Router history={history}>
-          <SurveyList loadSurveyList={loadSurveyListSpy} />
-        </Router>
-      </ApiContext.Provider>
-      
-      )
-    return {
-        loadSurveyListSpy,
-        history,
-        setCurrentAccountMock
-    }
+  render(
+    <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock, getCurrentAccount: () => mockAccountModel() }}>
+      <Router history={history}>
+        <SurveyList loadSurveyList={loadSurveyListSpy} />
+      </Router>
+    </ApiContext.Provider>
+
+  )
+  return {
+    loadSurveyListSpy,
+    history,
+    setCurrentAccountMock
+  }
 }
 
 describe('SurveyList Componente', () => {

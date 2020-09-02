@@ -1,14 +1,14 @@
-import React, { memo} from 'react'
+import React, { memo } from 'react'
 import Styles from './login-header-styles.scss'
 import Logo from '@/presentation/components/logo/logo'
 
 const LoginHeader: React.FC = () => {
-    return (
-        <header className={Styles.headerWrap}>
-            <Logo />
-            <h1>React - Iniciando</h1>
-        </header>
-    )
+  return (
+    <header className={Styles.headerWrap}>
+      <Logo />
+      <h1>React - Iniciando</h1>
+    </header>
+  )
 }
 
 export default memo(LoginHeader)

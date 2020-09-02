@@ -11,12 +11,12 @@ type SutTypes = {
 }
 
 const makeSut = (url = faker.internet.url()): SutTypes => {
-    const httpPostClientSpy = new HttpPostClientSpy<RemoteAuthentication.Model>()
-    const sut = new RemoteAuthentication(url, httpPostClientSpy)
-    return {
-        sut,
-        httpPostClientSpy
-    }
+  const httpPostClientSpy = new HttpPostClientSpy<RemoteAuthentication.Model>()
+  const sut = new RemoteAuthentication(url, httpPostClientSpy)
+  return {
+    sut,
+    httpPostClientSpy
+  }
 }
 
 describe('RemoteAuthentication', () => {
