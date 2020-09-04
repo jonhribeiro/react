@@ -2,14 +2,25 @@ import Styles from './survey-result-styles.scss'
 import { Header, Footer, Loading, Calendar, Error } from '@/presentation/components'
 import { LoadSurveyResult } from '@/domain/usercases'
 import FlipMove from 'react-flip-move'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
-const SurveyResult: React.FC = () => {
-  const [state] = useState({
+type Props = {
+  loadSurveyResult: LoadSurveyResult
+}
+
+const SurveyResult: React.FC<Props> = ({ loadSurveyResult }: Props) => {
+  const [state, setState] = useState({
     isLoading: false,
     error: '',
     surveyResult: null as LoadSurveyResult.Model
   })
+
+  useEffect(() => {
+    loadSurveyResult.load()
+      .then(surveyResult => setState(old => ({ ...old, surveyResult })))
+      .catch()
+  }, [])
+
   return (
     <div className={Styles.surveyResultWrap}>
       <Header />
@@ -17,25 +28,17 @@ const SurveyResult: React.FC = () => {
         {state.surveyResult &&
         <>
           <hgroup>
-            <Calendar date={ new Date() } className={Styles.calendarWrap} />
-            <h2>Qual e o seu prato predilecto ? Diz ai quero saber e quero tambem</h2>
+            <Calendar date={ state.surveyResult.date } className={Styles.calendarWrap} />
+            <h2 data-testid="question">{state.surveyResult.question}</h2>
           </hgroup>
-          <FlipMove className={Styles.answersList}>
-            <li>
-              <img src="http://fordevs.herokuapp.com/static/img/logo-react.png"/>
-              <span className={Styles.answer}>ReactJs</span>
-              <span className={Styles.percent}>50%</span>
-            </li>
-            <li className={Styles.active}>
-              <img src="http://fordevs.herokuapp.com/static/img/logo-react.png"/>
-              <span className={Styles.answer}>ReactJs</span>
-              <span className={Styles.percent}>50%</span>
-            </li>
-            <li>
-              <img src="http://fordevs.herokuapp.com/static/img/logo-react.png"/>
-              <span className={Styles.answer}>ReactJs</span>
-              <span className={Styles.percent}>50%</span>
-            </li>
+          <FlipMove data-testid="answers" className={Styles.answersList}>
+            {state.surveyResult.answers.map(answer =>
+              <li data-testid="answer-wrap" key={answer.answer} className={answer.isCurrentAccountAnswer ? Styles.active : ''}>
+                { answer.image && <img data-testid="image" src={answer.image} alt={answer.answer}/>}
+                <span data-testid="answer" className={Styles.answer}>{answer.answer}</span>
+                <span data-testid="percent" className={Styles.percent}>{answer.percent}%</span>
+              </li>
+            )}
           </FlipMove>
           <button>Voltar</button>
         </>
