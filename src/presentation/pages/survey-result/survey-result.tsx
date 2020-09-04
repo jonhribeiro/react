@@ -8,11 +8,11 @@ const SurveyResult: React.FC = () => {
     <div className={Styles.surveyResultWrap}>
       <Header />
       <div className={Styles.contentWrap}>
-        {false &&
+        {true &&
         <>
           <hgroup>
             <Calendar date={ new Date() } className={Styles.calendarWrap} />
-            <h2>Qual e o seu mano</h2>
+            <h2>Qual e o seu prato predilecto ? Diz ai quero saber e quero tambem</h2>
           </hgroup>
           <FlipMove className={Styles.answersList}>
             <li>
