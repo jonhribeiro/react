@@ -1,4 +1,3 @@
-import React from 'react'
 import { render, screen, waitFor, fireEvent } from '@testing-library/react'
 import { SurveyList } from '@/presentation/pages'
 import { LoadSurveyList } from '@/domain/usercases'
@@ -8,6 +7,7 @@ import { ApiContext } from '@/presentation/contexts'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory, MemoryHistory } from 'history'
 import { AccountModel } from '@/domain/models'
+import React from 'react'
 
 class LoadSurveyListSpy implements LoadSurveyList {
   callsCount = 0
