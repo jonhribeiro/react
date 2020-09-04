@@ -5,7 +5,7 @@
     flex-direction: column;
     justify-content: space-between;
     min-height: 100vh;
-    background-color: $disabledBackground;
+    background-color: $background;
 
   .contentWrap{
       display: flex;
@@ -15,6 +15,34 @@
       width: 100%;
       flex-grow: 1;
       padding: 40px;
+
+      &:empty {
+        background-repeat: no-repeat;
+        background-image: 
+          linear-gradient(to right, $disabledBackground, $disabledBackground),
+          linear-gradient(to right, $disabledBackground, $disabledBackground),
+          linear-gradient(to right, $disabledBackground, $disabledBackground),
+          linear-gradient(to right, $disabledBackground, $disabledBackground),
+          linear-gradient(to right, $disabledBackground, $disabledBackground),
+          linear-gradient(to right, $disabledBackground, $disabledBackground),
+          linear-gradient(to right, $disabledBackground, $disabledBackground);
+        background-position:
+          40px 40px,
+          136px 50px,
+          136px 80px,
+          136px 110px,
+          40px 172px,
+          40px 270px,
+          40px 372px;
+        background-size: 
+          80px 100px,
+          calc(70% - 176px) 20px,
+          calc(100% - 176px) 20px,
+          calc(80% - 176px) 20px,
+          calc(100% - 80px) 82px,
+          calc(100% - 80px) 84px,
+          calc(100% - 80px) 82px;
+      }
 
       hgroup {
         display: flex;
