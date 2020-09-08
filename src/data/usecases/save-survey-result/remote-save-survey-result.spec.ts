@@ -1,7 +1,7 @@
 import { HttpClientSpy, mockRemoteSurveyResultModel } from '@/data/test'
 import { RemoteSaveSurveyResult } from '@/data/usecases'
 import { HttpStatusCode } from '@/data/protocols/http'
-// import { AccessDeniedError, UnexpectedError } from '@/domain/errors'
+import { AccessDeniedError } from '@/domain/errors'
 import { mockSaveSurveyResultParams } from '@/domain/test'
 import faker from 'faker'
 
@@ -34,14 +34,14 @@ describe('RemoteSaveSurveyResult', () => {
     expect(httpClientSpy.body).toEqual(saveSurveyResultParams)
   })
 
-  //   test('deve mostra AccessDeniedError erro 403', async () => {
-  //     const { sut, httpClientSpy } = makeSut()
-  //     httpClientSpy.response = {
-  //       statusCode: HttpStatusCode.forbidden
-  //     }
-  //     const promise = sut.load()
-  //     await expect(promise).rejects.toThrow(new AccessDeniedError())
-  //   })
+  test('deve mostra AccessDeniedError erro 403', async () => {
+    const { sut, httpClientSpy } = makeSut()
+    httpClientSpy.response = {
+      statusCode: HttpStatusCode.forbidden
+    }
+    const promise = sut.save(mockSaveSurveyResultParams())
+    await expect(promise).rejects.toThrow(new AccessDeniedError())
+  })
 
   //   test('deve mostra UnexpectedError erro 404', async () => {
   //     const { sut, httpClientSpy } = makeSut()
