@@ -1,4 +1,3 @@
-
 import { RemoteAuthentication } from '@/data/usecases/authentication/remote-authentication'
 import { makeAxiosHttpClient } from '@/main/factories/http/axios-client-factory'
 import { Authentication } from '@/domain/usercases'

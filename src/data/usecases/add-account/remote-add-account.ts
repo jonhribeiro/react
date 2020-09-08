@@ -1,16 +1,17 @@
-import { HttpPostClient, HttpStatusCode } from '@/data/protocols/http'
+import { HttpClient, HttpStatusCode } from '@/data/protocols/http'
 import { AddAccount } from '@/domain/usercases'
 import { EmailInUseError, UnexpectedError } from '@/domain/errors'
 
 export class RemoteAddAccount implements AddAccount {
   constructor (
     private readonly url: string,
-    private readonly httppostClient: HttpPostClient<RemoteAddAccount.Model>
+    private readonly httpClient: HttpClient<RemoteAddAccount.Model>
   ) {}
 
   async add (params: AddAccount.Params): Promise<AddAccount.Model> {
-    const httResponse = await this.httppostClient.post({
+    const httResponse = await this.httpClient.request({
       url: this.url,
+      method: 'post',
       body: params
     })
     switch (httResponse.statusCode) {
