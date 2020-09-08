@@ -20,18 +20,13 @@ const makeSut = (url = faker.internet.url()): SutTypes => {
 }
 
 describe('RemoteAddAccount', () => {
-  test('deve chamar HttpPostClient com o URL correto', async () => {
+  test('deve chamar HttpPostClient com o URL correto e valores', async () => {
     const url = faker.internet.url()
     const { sut, httpClientSpy } = makeSut(url)
-    await sut.add(mockAddAccountParams())
-    expect(httpClientSpy.url).toBe(url)
-    expect(httpClientSpy.method).toBe('post')
-  })
-
-  test('deve chamar HttpPostClient com o body correto', async () => {
-    const { sut, httpClientSpy } = makeSut()
     const addAccountParams = mockAddAccountParams()
     await sut.add(addAccountParams)
+    expect(httpClientSpy.url).toBe(url)
+    expect(httpClientSpy.method).toBe('post')
     expect(httpClientSpy.body).toEqual(addAccountParams)
   })
 
