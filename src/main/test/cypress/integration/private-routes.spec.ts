@@ -5,4 +5,9 @@ describe('Private Routes', () => {
     cy.visit('')
     Helper.testUrl('/login')
   })
+
+  it('deve sair se nao tiver token de acesso', () => {
+    cy.visit('/surveys/any_id')
+    Helper.testUrl('/login')
+  })
 })
