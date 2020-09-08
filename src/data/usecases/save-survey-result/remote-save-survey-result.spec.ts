@@ -61,18 +61,18 @@ describe('RemoteSaveSurveyResult', () => {
     await expect(promise).rejects.toThrow(new UnexpectedError())
   })
 
-//   test('deve retornar uma lista index e httpClientSpy retornar 200 caso de sucesso', async () => {
-//     const { sut, httpClientSpy } = makeSut()
-//     const httpResult = mockRemoteSurveyResultModel()
-//     httpClientSpy.response = {
-//       statusCode: HttpStatusCode.ok,
-//       body: httpResult
-//     }
-//     const surveyList = await sut.load()
-//     expect(surveyList).toEqual({
-//       question: httpResult.question,
-//       answers: httpResult.answers,
-//       date: new Date(httpResult.date)
-//     })
-//   })
+  test('deve retornar uma lista index e httpClientSpy retornar 200 caso de sucesso', async () => {
+    const { sut, httpClientSpy } = makeSut()
+    const httpResult = mockRemoteSurveyResultModel()
+    httpClientSpy.response = {
+      statusCode: HttpStatusCode.ok,
+      body: httpResult
+    }
+    const surveyList = await sut.save(mockSaveSurveyResultParams())
+    expect(surveyList).toEqual({
+      question: httpResult.question,
+      answers: httpResult.answers,
+      date: new Date(httpResult.date)
+    })
+  })
 })
