@@ -1,7 +1,7 @@
 import { HttpClientSpy, mockRemoteSurveyResultModel } from '@/data/test'
 import { RemoteSaveSurveyResult } from '@/data/usecases'
 import { HttpStatusCode } from '@/data/protocols/http'
-import { AccessDeniedError } from '@/domain/errors'
+import { AccessDeniedError, UnexpectedError } from '@/domain/errors'
 import { mockSaveSurveyResultParams } from '@/domain/test'
 import faker from 'faker'
 
@@ -43,23 +43,23 @@ describe('RemoteSaveSurveyResult', () => {
     await expect(promise).rejects.toThrow(new AccessDeniedError())
   })
 
-  //   test('deve mostra UnexpectedError erro 404', async () => {
-  //     const { sut, httpClientSpy } = makeSut()
-  //     httpClientSpy.response = {
-  //       statusCode: HttpStatusCode.notFound
-  //     }
-  //     const promise = sut.load()
-  //     await expect(promise).rejects.toThrow(new UnexpectedError())
-  //   })
+  test('deve mostra UnexpectedError erro 404', async () => {
+    const { sut, httpClientSpy } = makeSut()
+    httpClientSpy.response = {
+      statusCode: HttpStatusCode.notFound
+    }
+    const promise = sut.save(mockSaveSurveyResultParams())
+    await expect(promise).rejects.toThrow(new UnexpectedError())
+  })
 
-  //   test('deve mostra UnexpectedError erro 500', async () => {
-  //     const { sut, httpClientSpy } = makeSut()
-  //     httpClientSpy.response = {
-  //       statusCode: HttpStatusCode.serverError
-  //     }
-  //     const promise = sut.load()
-  //     await expect(promise).rejects.toThrow(new UnexpectedError())
-  //   })
+  test('deve mostra UnexpectedError erro 500', async () => {
+    const { sut, httpClientSpy } = makeSut()
+    httpClientSpy.response = {
+      statusCode: HttpStatusCode.serverError
+    }
+    const promise = sut.save(mockSaveSurveyResultParams())
+    await expect(promise).rejects.toThrow(new UnexpectedError())
+  })
 
 //   test('deve retornar uma lista index e httpClientSpy retornar 200 caso de sucesso', async () => {
 //     const { sut, httpClientSpy } = makeSut()
