@@ -30,13 +30,13 @@
   },
   "homepage": "https://gitlab.com/jonhribeiro/react-init#readme",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.3",
     "express": "^4.17.1",
     "express-history-api-fallback": "^2.2.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^3.4.3"
+    "react-scripts": "^4.0.0"
   },
   "devDependencies": {
     "@cypress/webpack-preprocessor": "^5.4.4",
